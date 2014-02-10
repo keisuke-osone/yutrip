@@ -2,15 +2,17 @@
 
 namespace Classes;
 
-class Gnavi extends Api implements api_interface{
+class Gnavi extends Api implements api_interface {
 	private $area_code;
 	private $pref_code;
+	private $range;
 	private $config;
 
 	public function __construct() {
-		$this->area_code = null;
-		$this->pref_code = null;
-		$this->config = \Classes\Config::get(get_class($this));
+		$this->area_code 	= null;
+		$this->pref_code 	= null;
+		$this->config 		= \Classes\Config::get(get_class($this));
+		$this->range 		= $this->config['RANGE_DEFAULT_VALUE'];				//range default val
 	}
 
 	public function getAreaCode() {
@@ -46,22 +48,44 @@ class Gnavi extends Api implements api_interface{
 	public function setPrefCodeFromAreaCode($area_code) {
 		$obj = simplexml_load_file(dirname(__FILE__) . '/../xml/pref.xml');
 		foreach ($obj as $key => $val) {
-			if ($pref_code === $val->area_name) {
-				$this->pref_code = $val->pref_code;
+			$area_name_array = (array) $val->area_name;
+			if ($pref_code === $area_name_array[0]) {
+				$this->pref_code = $area_name_array[0];
 				break;
 			}
 		}
 		return;
 	}
 
-	public function call($word=null) {
-		if ($word == null) {
+	public function setRange($range=0) {
+		if ($range <= 300) {
+			$this->range = 1;
+		} else if ($range <= 500) {
+			$this->range = 2;
+		} else if ($range <= 1000) {
+			$this->range = 3;
+		} else if ($range <= 2000) {
+			$this->range = 4;
+		} else {
+			$this->range = 5;
+		}
+	}
+
+	public function call($geo=array(), $option=array()) {
+		if (\Lib\Util::checkGeoInfo($geo) !== true) {
+			error_log('latitude=' . $latitude . ' longitude=' . $longitude);
 			return array();
 		}
 
+		$url = $this->config['ENDPOINT'] 
+			. 'keyid=' . $this->config['ACCESS_KEY'] 
+			. '&input_coordinates_mode=1&range=' 
+			. $this->range . '&latitude=' 
+			. $geo['latitude'] . '&longitude=' 
+			. $geo['longitude'];
+
 		$ret = array();
 		try {
-			$url = $this->config['ENDPOINT'] . 'keyid=' . $this->config['ACCESS_KEY'] . '&name=' . urlencode($word);
 
 			$ch = curl_init();
 

@@ -6,7 +6,8 @@ require_once dirname(__FILE__) . '/config.php';
 
 
 interface api_interface{
-	public function call($word=null);
+	public function setRange($param=0);
+	public function call($geo=array(), $option=array());
 }
 
 class Api {
