@@ -22,7 +22,7 @@ class Gnavi extends Api implements api_interface{
 	}
 
 	public function setAreaCodeFromAreaName($area_name) {
-		$obj = simplexml_load_file(dirname(__FILE__) . '/xml/area.xml');
+		$obj = simplexml_load_file(dirname(__FILE__) . '/../xml/area.xml');
 		foreach ($obj as $key => $val) {
 			if ($area_name === $val->area_name) {
 				$this->area_code = $val->area_code;
@@ -32,17 +32,19 @@ class Gnavi extends Api implements api_interface{
 	}
 
 	public function setPrefCodeFromPrefName($pref_name) {
-		$obj = simplexml_load_file(dirname(__FILE__) . '/xml/pref.xml');
-		foreach ($obj as $key => $val) {
-			if ($pref_name === $val->pref_name) {
-				$this->pref_code = $val->pref_code;
+		$obj = simplexml_load_file(dirname(__FILE__) . '/../xml/pref.xml');
+		foreach ($obj->pref as $key => $val) {
+			$pref_name_array = (array) $val->pref_name;
+			if ($pref_name === $pref_name_array[0]) {
+				$pref_code_array = (array) $val->pref_code;
+				$this->pref_code = $pref_code_array[0];
 				break;
 			}
 		}
 	}
 
 	public function setPrefCodeFromAreaCode($area_code) {
-		$obj = simplexml_load_file(dirname(__FILE__) . '/xml/pref.xml');
+		$obj = simplexml_load_file(dirname(__FILE__) . '/../xml/pref.xml');
 		foreach ($obj as $key => $val) {
 			if ($pref_code === $val->area_name) {
 				$this->pref_code = $val->pref_code;
