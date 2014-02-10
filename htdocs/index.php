@@ -4,9 +4,6 @@ require_once dirname(__FILE__) . '/../bootstrap.php';
 
 //ぐるなびAPIの例
 $api = \Classes\Api::getInstance('gnavi');
-$api->setPrefCodeFromPrefName("北海道");
-echo $api->getPrefCode();
-exit;
 $result = $api->call('先斗町');
 
 //京都APIの例
