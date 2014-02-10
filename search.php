@@ -10,4 +10,4 @@ require_once dirname(__FILE__) . '/bootstrap.php';
 $api = \Classes\Api::getInstance('pb');
 $result = $api->call('cycle', '00001C0000000000001F001BFC7A7212');
 
-var_dump($result);
+echo json_encode($result);
