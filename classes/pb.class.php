@@ -42,6 +42,7 @@ class Pb extends Api implements api_interface{
 
 			$url = $this->config['ENDPOINT'] . '&ugx_targetTransportation=' . $ugx_targetTransportation 
 					. '&target=ucode_' . $ucode . '&offset=' . $this->offset;
+					// . '';
 
 			if ($this->limit > 0) {
 				$url = $url . '&limit=' . $this->limit;
@@ -61,7 +62,7 @@ class Pb extends Api implements api_interface{
 				throw new Exception(curl_error($ch), curl_errno($ch));
 				return array();
 			}
-			$ret = json_encode($content);
+			$ret = json_decode($content);
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

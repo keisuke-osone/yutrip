@@ -3,7 +3,7 @@
 require_once dirname(__FILE__) . '/bootstrap.php';
 
 //ぐるなびAPIの例
-// $api = Api::getInstance('gnavi');
+// $api = \Classes\Api::getInstance('gnavi');
 // $result = $api->call('先斗町');
 
 //京都APIの例
