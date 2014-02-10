@@ -21,8 +21,4 @@ class Api {
 		$class_name = '\Classes\\' . ucfirst($class_name);
 		return new $class_name();
 	}
-
-	public function call($word=null) {
-		return null;
-	}
 }
