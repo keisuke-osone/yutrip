@@ -1,9 +1,0 @@
-[Mon Feb 10 12:33:40 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /
-[Mon Feb 10 12:33:41 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /favicon.ico
-[Mon Feb 10 12:33:55 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /
-[Mon Feb 10 12:33:56 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /favicon.ico
-[Mon Feb 10 12:36:38 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /
-[Mon Feb 10 12:36:38 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /favicon.ico
-[Mon Feb 10 12:36:40 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /
-[Mon Feb 10 12:36:40 2014] [crit] [client 192.168.33.1] configuration error:  couldn't perform authentication. AuthType not set!: /favicon.ico
-[Mon Feb 10 12:37:23 2014] [error] [client 192.168.33.1] File does not exist: /home/yutrip/source/yutrip/htdocs/favicon.ico
