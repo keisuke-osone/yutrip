@@ -10,7 +10,7 @@ class Position extends Api implements api_interface{
 	public function __construct() {
 		// $this->latitude = null;
 		// $this->longitude = null;
-		$this->config = \Classes\Config::get(get_class($this));
+		// parent::$conf = \Classes\Config::get(get_class($this));
 	}
 
 	public function call($word=null) {
@@ -20,7 +20,7 @@ class Position extends Api implements api_interface{
 
 		$ret = array();
 		try {
-			$url = $this->config['ENDPOINT'] . 'keyid=' . $this->config['ACCESS_KEY'] . '&name=' . urlencode($word);
+			$url = parent::$conf['ENDPOINT'] . 'keyid=' . parent::$conf['ACCESS_KEY'] . '&name=' . urlencode($word);
 
 			$ch = curl_init();
 

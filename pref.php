@@ -1,5 +1,5 @@
 <?php
-
+// テスト用
 $obj = simplexml_load_file("area.xml");
 
 foreach ($obj as $key => $val) {

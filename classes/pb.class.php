@@ -2,16 +2,16 @@
 
 namespace Classes;
 
-class Pb extends Api implements api_interface{
+class Pb extends Api implements api_interface {
 
 	private $offset;
 	private $limit;
-	private $config;
+	private $range;
 
 	public function __construct() {
 		$this->offset = 0;
 		$this->limit  = 0;
-		$this->config = \Classes\Config::get(get_class($this));
+		$this->range  = parent::$conf['RANGE_DEFAULT_VALUE'];				//range default val
 	}
 
 	public function offset($offset_num) {
@@ -22,37 +22,49 @@ class Pb extends Api implements api_interface{
 		$this->limit = $limit_num;
 	}
 
-	public function call($transportation=null, $ucode=null) {
+	public function setRange($range=0) {
+		$this->range = $range;
+		if ($range <= 0) {
+			$this->range = parent::$conf['RANGE_DEFAULT_VALUE'];
+		}
+	}
 
-		if ($transportation == null || $ucode == null) {
-			error_log('transportation=' . $transportation . ' ucode=' . $ucode);
+	public function call($geo=array(), $option=array()) {
+
+		if (\Lib\Util::checkGeoInfo($geo) !== true) {
 			return array();
+		}
+
+		if (isset($option['transportation']) !== true) {
+			$transportation = 'cycle';
+		}
+
+		if ($transportation === 'car') {
+			$ugx_targetTransportation = 'ugx_Car';
+		} else if ($transportation === 'cycle') {
+			$ugx_targetTransportation = 'ugx_Cycle';
+		} else if ($transportation === 'both') {
+			$ugx_targetTransportation = 'ugx_Car,ugx_Cycle';
+		}
+
+		$url = parent::$conf['ENDPOINT'] 
+			. '&ugx_targetTransportation=' . $ugx_targetTransportation
+			. '&lat=' . $geo['latitude'] 
+			. '&lon=' . $geo['longitude'] 
+			. '&radius=' . $this->range;
+
+		if ($this->limit > 0) {
+			$url = $url . '&limit=' . $this->limit;
 		}
 
 		$ret = array();
 		try {
 
-			if ($transportation === 'car') {
-				$ugx_targetTransportation = 'ugx_Car';
-			} else if ($transportation === 'cycle') {
-				$ugx_targetTransportation = 'ugx_Cycle';
-			} else if ($transportation === 'both') {
-				$ugx_targetTransportation = 'ugx_Car,ugx_Cycle';
-			}
-
-			$url = $this->config['ENDPOINT'] . '&ugx_targetTransportation=' . $ugx_targetTransportation 
-					. '&target=ucode_' . $ucode . '&offset=' . $this->offset;
-					// . '';
-
-			if ($this->limit > 0) {
-				$url = $url . '&limit=' . $this->limit;
-			}
-
 			$ch = curl_init();
 
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_USERPWD, $this->config['USER_ID'] . ':' . $this->config['PASSWORD']);
+			curl_setopt($ch, CURLOPT_USERPWD, parent::$conf['USER_ID'] . ':' . parent::$conf['PASSWORD']);
 			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 			$content = curl_exec($ch);
 			$result = curl_getinfo($ch);
