@@ -21,4 +21,16 @@ class Api {
 		$class_name = '\Classes\\' . ucfirst($class_name);
 		return new $class_name();
 	}
+
+//##########################################################
+//	エラーが出ないようにinterfaceのメソッドを作っておく
+//##########################################################
+
+	public function setRange($param=0) {
+
+	}
+
+	public function call($geo=array(), $option=array()) {
+		return array();
+	}
 }
