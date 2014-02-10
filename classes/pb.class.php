@@ -7,13 +7,11 @@ class Pb extends Api implements api_interface {
 	private $offset;
 	private $limit;
 	private $range;
-	private $config;
 
 	public function __construct() {
 		$this->offset = 0;
 		$this->limit  = 0;
-		$this->config = \Classes\Config::get(get_class($this));
-		$this->range  = $this->config['RANGE_DEFAULT_VALUE'];				//range default val
+		$this->range  = parent::$conf['RANGE_DEFAULT_VALUE'];				//range default val
 	}
 
 	public function offset($offset_num) {
@@ -27,7 +25,7 @@ class Pb extends Api implements api_interface {
 	public function setRange($range=0) {
 		$this->range = $range;
 		if ($range <= 0) {
-			$this->range = $this->config['RANGE_DEFAULT_VALUE'];
+			$this->range = parent::$conf['RANGE_DEFAULT_VALUE'];
 		}
 	}
 
@@ -49,7 +47,7 @@ class Pb extends Api implements api_interface {
 			$ugx_targetTransportation = 'ugx_Car,ugx_Cycle';
 		}
 
-		$url = $this->config['ENDPOINT'] 
+		$url = parent::$conf['ENDPOINT'] 
 			. '&ugx_targetTransportation=' . $ugx_targetTransportation
 			. '&lat=' . $geo['latitude'] 
 			. '&lon=' . $geo['longitude'] 
@@ -66,7 +64,7 @@ class Pb extends Api implements api_interface {
 
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_USERPWD, $this->config['USER_ID'] . ':' . $this->config['PASSWORD']);
+			curl_setopt($ch, CURLOPT_USERPWD, parent::$conf['USER_ID'] . ':' . parent::$conf['PASSWORD']);
 			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 			$content = curl_exec($ch);
 			$result = curl_getinfo($ch);

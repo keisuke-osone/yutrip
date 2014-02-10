@@ -6,13 +6,12 @@ class Gnavi extends Api implements api_interface {
 	private $area_code;
 	private $pref_code;
 	private $range;
-	private $config;
+	// private $config;
 
 	public function __construct() {
 		$this->area_code 	= null;
 		$this->pref_code 	= null;
-		$this->config 		= \Classes\Config::get(get_class($this));
-		$this->range 		= $this->config['RANGE_DEFAULT_VALUE'];				//range default val
+		$this->range 		= parent::$conf['RANGE_DEFAULT_VALUE'];				//range default val
 	}
 
 	public function getAreaCode() {
@@ -77,12 +76,12 @@ class Gnavi extends Api implements api_interface {
 			return array();
 		}
 
-		$url = $this->config['ENDPOINT'] 
-			. 'keyid=' . $this->config['ACCESS_KEY'] 
-			. '&input_coordinates_mode=1&range=' 
-			. $this->range . '&latitude=' 
-			. $geo['latitude'] . '&longitude=' 
-			. $geo['longitude'];
+		$url = parent::$conf['ENDPOINT'] 
+			. 'keyid=' . parent::$conf['ACCESS_KEY'] 
+			. '&input_coordinates_mode=1' 
+			. '&range=' . $this->range 
+			. '&latitude=' . $geo['latitude'] 
+			. '&longitude=' . $geo['longitude'];
 
 		$ret = array();
 		try {
