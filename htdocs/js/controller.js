@@ -18,3 +18,5 @@ d3.select('#search')
         // ここから文字列取得
         // 
     });
+
+main.mappingObject();
