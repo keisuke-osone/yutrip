@@ -30,11 +30,11 @@ function Map (lat, lon) {
     }
 
     //APIからの結果を元にマーカーを作成
-    this.mappingObject = function () {
+    this.mappingObject = function (json) {
         //仮でテスト
-        var url = 'js/test.json';
+        //var url = 'js/test.json';
 
-        d3.json(url, function(error, json) {
+        //d3.json(url, function(error, json) {
             // console.log(json.g.rest);
             // console.log(json.p);
             // console.log(center);
@@ -162,7 +162,7 @@ function Map (lat, lon) {
                 map: map, /*マーカーを配置する地図オブジェクト */
                 title: '京都駅'
             });
-        });
+  //      });
     }
 }
 
