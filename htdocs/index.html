@@ -4,15 +4,20 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <link rel="stylesheet" type="text/css" href="./css/style.css">
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDy9d0MoxOTFZD3Hphz0j1Qfx50xeUKvbM&sensor=false"></script>
-        <script type="text/javascript" src="./js/map.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
     </head>
-    <body onload="initialize()">
+    <body>
         <section>
             <h1>ゆとりっぷ(仮)</h1>
             <form action="">
                 <input type="text">
+                <input type="button" id="search">
             </form>
-            <div id="map_canvas"></div>
+            <figure id='main-contents'>
+                <div id="map_canvas"></div>
+            </figure>
         </section>
+        <script type="text/javascript" src="js/map.js"></script>
+        <script type="text/javascript" src="js/controller.js"></script>
     </body>
 </html>
