@@ -27,7 +27,6 @@ function getLatLng(place, callback) {
                 latlng[i] = results[i].geometry.location;
             }
         }
-        console.log(latlng);
         callback(latlng);
         
     });
