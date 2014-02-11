@@ -36,12 +36,13 @@ d3.select('#search')
 	    			success: function(result) {
 	    				// console.log('成功');
 						console.log(result);
+						main.mappingObject(result);
 					},
 					error: function() {
 						alert('失敗しました');
 					},
 
-    		});	
+    			});	
     		}
         })        
 
@@ -49,4 +50,5 @@ d3.select('#search')
         // 
     });
 
-main.mappingObject();
+// main.mappingObject();
+
