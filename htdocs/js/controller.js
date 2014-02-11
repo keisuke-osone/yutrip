@@ -14,6 +14,7 @@ d3.select('#search')
         
         console.log(inputText);
         // ここに入力の確認処理
+        getLatLng(inputText);
 
         // ここから文字列取得
         // 
