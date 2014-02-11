@@ -1,6 +1,7 @@
 function getLatLng(place) {
 
     var geocoder = new google.maps.Geocoder();
+    var latlng = new Array();
 
     //geocodeリクエストを実行
     //住所,ワード→緯度経度取得の場合は、addressを指定
@@ -20,16 +21,19 @@ function getLatLng(place) {
 
         //Todo:for-inは遅いから変更する
         //緯度経度を取得
-        console.log(results);
-        var latlng = new Array();
         for (var i in results) {
             if (results[i].geometry) {
                 latlng[i] = results[i].geometry.location;
             }
         }
-        return latlng;
-        // console.log(latlng[0].d);
-    });
+        
+  });
+    console.log(latlng);
+    setTimeout(function(){
+      console.log(latlng);
+      return latlng;
+    }, 2000);
+    
     
 }
 
