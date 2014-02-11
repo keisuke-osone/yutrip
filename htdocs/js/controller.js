@@ -13,9 +13,37 @@ d3.select('#search')
         var inputText = d3.select('#search-text')[0][0].value;
         
         console.log(inputText);
-        // ここに入力の確認処理
-        console.log(getLatLng(inputText));
         
+        //検索ワードから緯度経度を取得してAPIに送る
+        getLatLng(inputText, function (latlng) {
+    		
+    		for (var i = 0; i < latlng.length; i++) {
+    			console.log(Math.round(latlng[i].d));
+    			console.log(Math.round(latlng[i].e));
+    			// latlng[0].d = 35.03950409999999;
+    			// latlng[0].e = 135.72843090000003;
+    			console.log(latlng[i].d);
+    			console.log(latlng[i].e);
+    			var data = new Array();
+    			data.latitude = latlng[i].d;
+    			data.longitude = latlng[i].e;
+    			console.log(data);
+    			$.ajax({
+	    			type: 'GET',
+	    			url:'http://192.168.33.30/search.php',
+	    			async: true,
+	    			data: data,
+	    			success: function(result) {
+	    				// console.log('成功');
+						console.log(result);
+					},
+					error: function() {
+						alert('失敗しました');
+					},
+
+    		});	
+    		}
+        })        
 
         // ここから文字列取得
         // 
