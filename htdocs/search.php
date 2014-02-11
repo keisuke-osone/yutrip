@@ -22,4 +22,5 @@ $option['transportation'] = 'cycle';
 $api->setRange(500);
 $result['p'] = $api->call($geo, $option);
 
+header('content-type: application/json; charset=utf-8');
 echo json_encode($result);
