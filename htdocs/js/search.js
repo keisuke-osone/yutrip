@@ -17,16 +17,20 @@ function getLatLng(place) {
         if(checkGeoCoderStatus(status) !== true) {
             alert(response);
         }
-        
+
+        //Todo:for-inは遅いから変更する
+        //緯度経度を取得
+        console.log(results);
+        var latlng = new Array();
         for (var i in results) {
             if (results[i].geometry) {
-                // 緯度経度を取得
-                var latlng = results[i].geometry.location;
-                console.log(latlng);
+                latlng[i] = results[i].geometry.location;
             }
         }
-
+        return latlng;
+        // console.log(latlng[0].d);
     });
+    
 }
 
 //ジオコーダーからのレスポンスのチェック 
