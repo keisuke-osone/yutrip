@@ -1,21 +1,20 @@
 //マップに関する疑似クラス
 function Map (lat, lon) {
-    //Mapの中央を決める
-    this.lat = lat;
-    this.lon = lon;
-    
-    //初期位置を中心にMapを表示
-    this.initialize = function () {
-      
-        var mapOptions = {
-            center: new google.maps.LatLng(this.lat , this.lon),
-            zoom: 12,
+    //Mapの中央 //初期値は京都駅
+    this.center = {lat: 34.985458 , lon: 135.757755};
+    this.mapOptions = {
+            center: new google.maps.LatLng(this.center.lat , this.center.lon),
+            zoom: 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById("map_canvas"),
-              mapOptions);
+    this.map;
 
-        google.maps.event.addListener(map, "click", function() {
+    //初期位置を中心にMapを表示
+    this.initialize = function () {
+    	this.map = new google.maps.Map(document.getElementById("map_canvas"),
+              this.mapOptions);
+
+        google.maps.event.addListener(this.map, "click", function() {
             var chicago = new google.maps.LatLng(this.lat , this.lon);
             var numTiles = 1 << map.getZoom();
             var projection = new MercatorProjection();
