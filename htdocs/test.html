@@ -1,0 +1,146 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<link rel="index" href="./">
+<link rel="stylesheet" type="text/css" href="v3.css" title="kugai_v3_css">
+<meta name="Keywords" content="Google,MAPS,API,GMAP,v3,住所から緯度経度に変換">
+<meta name="Description" content="Google Maps API V3で、google.maps.Geocoderクラスのgeocode()を使って、地名や住所から緯度・経度を求めるサンプルプログラム。">
+<title>地名や住所から緯度・経度を取得する</title>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+</head>
+<body>
+<div id="wrap_out">
+<div id="wrap">
+<div id="navi"><a href="/">なんちゃって☆めも</a>::<a href="./">Google Maps API V3 で あそ～ぶ</a></div>
+<div id="top"><h1 id="title">地名や住所から緯度・経度を取得する</h1><div id="gtop"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-7939613401472758";
+/* getLatLngByAddress top */
+google_ad_slot = "1091075347";
+google_ad_width = 728;
+google_ad_height = 15;
+//--></script>
+
+
+<div id="main">
+<div id="aim">　Google Maps API V3で、google.maps.Geocoderクラスのgeocode()を使って、地名や住所から緯度・経度を求めるサンプルプログラムです。<ul><li>プログラムに興味はなく、地図上で調べたいだけの場合は<a href="getLatLng.html">緯度・経度・住所・標高を取得する</a>を。</li><li>V2の場合は、<a href="GClientGeocoder.html">GClientGeocoderクラス</a>を。</li><li>緯度経度から住所を求めたい場合は、<a href="getLatLngByAddress.html">地名や住所から緯度・経度を取得する</a>を。</li></ul></div>
+<div style="text-align: center;"><form action="#" onsubmit="getLatLng(document.getElementById('address').value); return(false);">住所 or ランドマーク：<input type='text' id='address' style='width: 400px' value=""> <input type='submit' value='検索'></form></div>
+<div id='map' style='width:730px; height:400px;'><br></div>
+<script type='text/javascript'><!--
+	var map = new google.maps.Map(document.getElementById("map"), {
+		zoom: 7,
+		center: new google.maps.LatLng(36,138),
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	});
+	function getLatLng(place) {
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({
+			address: place,
+			region: 'jp'
+		}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				var bounds = new google.maps.LatLngBounds();
+				for (var r in results) {
+					if (results[r].geometry) {
+						var latlng = results[r].geometry.location;
+						bounds.extend(latlng);
+						var address = results[r].formatted_address.replace(/^日本, /, '');
+						new google.maps.InfoWindow({
+							content: address + "<br>(Lat, Lng) = " + latlng.toString()
+						}).open(map, new google.maps.Marker({
+							position: latlng,
+							map: map
+						}));
+					}
+				}
+				map.fitBounds(bounds);
+			} else if (status == google.maps.GeocoderStatus.ERROR) {
+				alert("サーバとの通信時に何らかのエラーが発生！");
+			} else if (status == google.maps.GeocoderStatus.INVALID_REQUEST) {
+				alert("リクエストに問題アリ！geocode()に渡すGeocoderRequestを確認せよ！！");
+			} else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+				alert("短時間にクエリを送りすぎ！落ち着いて！！");
+			} else if (status == google.maps.GeocoderStatus.REQUEST_DENIED) {
+				alert("このページではジオコーダの利用が許可されていない！・・・なぜ！？");
+			} else if (status == google.maps.GeocoderStatus.UNKNOWN_ERROR) {
+				alert("サーバ側でなんらかのトラブルが発生した模様。再挑戦されたし。");
+			} else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+				alert("見つかりません");
+			} else {
+				alert("えぇ～っと・・、バージョンアップ？");
+			}
+		});
+	}
+//--></script>
+<div class="code_wrap"><div class="code"><pre>function getLatLng(place) {
+
+  // ジオコーダのコンストラクタ
+  var geocoder = new google.maps.Geocoder();
+
+  // geocodeリクエストを実行。
+  // 第１引数はGeocoderRequest。住所⇒緯度経度座標の変換時はaddressプロパティを入れればOK。
+  // 第２引数はコールバック関数。
+  geocoder.geocode({
+    address: place
+  }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+
+      // 結果の表示範囲。結果が１つとは限らないので、LatLngBoundsで用意。
+      var bounds = new google.maps.LatLngBounds();
+
+      for (var i in results) {
+        if (results[i].geometry) {
+
+          // 緯度経度を取得
+          var latlng = results[i].geometry.location;
+
+          // 住所を取得(日本の場合だけ「日本, 」を削除)
+          var address = results[i].formatted_address.replace(/^日本, /, '');
+
+          // 検索結果地が含まれるように範囲を拡大
+          bounds.extend(latlng);
+
+          // あとはご自由に・・・。
+          new google.maps.InfoWindow({
+            content: address + &quot;&lt;br&gt;(Lat, Lng) = &quot; + latlng.toString()
+          }).open(map, new google.maps.Marker({
+            position: latlng,
+            map: map
+          }));
+        }
+      }
+
+      // 範囲を移動
+      map.fitBounds(bounds);
+
+    } else if (status == google.maps.GeocoderStatus.ERROR) {
+      alert(&quot;サーバとの通信時に何らかのエラーが発生！&quot;);
+    } else if (status == google.maps.GeocoderStatus.INVALID_REQUEST) {
+      alert(&quot;リクエストに問題アリ！geocode()に渡すGeocoderRequestを確認せよ！！&quot;);
+    } else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+      alert(&quot;短時間にクエリを送りすぎ！落ち着いて！！&quot;);
+    } else if (status == google.maps.GeocoderStatus.REQUEST_DENIED) {
+      alert(&quot;このページではジオコーダの利用が許可されていない！・・・なぜ！？&quot;);
+    } else if (status == google.maps.GeocoderStatus.UNKNOWN_ERROR) {
+      alert(&quot;サーバ側でなんらかのトラブルが発生した模様。再挑戦されたし。&quot;);
+    } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+      alert(&quot;見つかりません&quot;);
+    } else {
+      alert(&quot;えぇ～っと・・、バージョンアップ？&quot;);
+    }
+  });
+}
+</pre></div></div>
+<div class="msg">　geocode()の第1引数 GeocoderRequest の address プロパティに住所や地名を与えると、第2引数のコールバック関数には、検索結果が引数として渡されます。見つかった場合には、結果がたとえ１つであっても配列として渡されるので、ループさせて取り出します。<br>
+<hr>
+</div>
+<div id="footer"><a href="/">なんちゃって☆めも</a>::<a href="./">Google MAPS API で あそ～ぶ</a></div>
+</div>
+</div>
+</div>
+</body>
+</html>

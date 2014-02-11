@@ -7,8 +7,7 @@ function getLatLng(place) {
   // 第１引数はGeocoderRequest。住所⇒緯度経度座標の変換時はaddressプロパティを入れればOK。
   // 第２引数はコールバック関数。
   geocoder.geocode({
-    address: place,
-    language: ja
+    address: place
   }, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
 
