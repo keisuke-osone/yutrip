@@ -1,4 +1,4 @@
-function getLatLng(place) {
+function getLatLng(place, callback) {
 
     var geocoder = new google.maps.Geocoder();
 
@@ -27,8 +27,9 @@ function getLatLng(place) {
                 latlng[i] = results[i].geometry.location;
             }
         }
-        return latlng;
-        // console.log(latlng[0].d);
+        console.log(latlng);
+        callback(latlng);
+        
     });
     
 }
