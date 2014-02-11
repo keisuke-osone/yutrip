@@ -1,11 +1,14 @@
 //マップに関する疑似クラス
 function Map (lat, lon) {
     //Mapの中央 //初期値は京都駅
-    var center = {lat: 34.985458 , lon: 135.757755};
+    // var center = {lat: 34.985458 , lon: 135.757755};
+    var center = {lat: 35.021365 , lon: 135.755481};
     var mapOptions = {
             center: new google.maps.LatLng(center.lat , center.lon),
-            zoom: 13,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            zoom: 14,
+            mapTypeControl: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false
         };
     var map;
 
@@ -32,11 +35,17 @@ function Map (lat, lon) {
         var url = 'js/test.json';
 
         d3.json(url, function(error, json) {
-            console.log(json.g.rest);
-            console.log(json.p);
-            console.log(center);
+            // console.log(json.g.rest);
+            // console.log(json.p);
+            // console.log(center);
+            var markerG = new Array();
+            var infowindowG = new Array();
+            var markerP = new Array();
+            var infowindowP = new Array();
 
             json.g.rest.forEach(function(d) {
+                console.log(d);
+
                 //緯度経度の設定
                 var latlng　=　new google.maps.LatLng(d.latitude, d.longitude);
 
@@ -49,6 +58,26 @@ function Map (lat, lon) {
                     map: map, /*マーカーを配置する地図オブジェクト */
                     title: d.name
                 });
+                // マーカーの配列を追加
+                markerG.push(marker);
+
+                google.maps.event.addListener(marker, 'click', function() {
+                    for (var i = 0; i < infowindowG.length; i++) {
+                        infowindowG[i].close();
+                    }
+
+                    map.setZoom(16);
+                    map.setCenter(marker.getPosition());
+
+                    console.log(d3.selectAll('.description'));
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: "<section class='description'><h1><a href='" + d.url + "' target='_blank'>" + d.name + "</a></h1><p>" + d.category + "</p></section>"
+                    });
+                    infowindowG.push(infowindow);
+
+                    infowindow.open(map, marker);
+                });
             });
 
             json.p.places.forEach(function(d) {
@@ -56,7 +85,8 @@ function Map (lat, lon) {
                 for(key in d) {
                     var lat;
                     var lon;
-                    var title;
+                    var title = '情報無し';
+                    var description = '情報無し';
                     console.log(key);
                     console.log(d[key]);
                     for(keys in d[key]) {
@@ -73,6 +103,10 @@ function Map (lat, lon) {
                             // console.log('long');
                             // console.log(d[key][keys][0]);
                             title = d[key][keys][0].value;
+                        } else if (keys.match(/usageFee/)) {
+                            // console.log('long');
+                            // console.log(d[key][keys][0]);
+                            description = d[key][keys][0].value;
                         }
                     }
                     // var goldStar = {
@@ -91,12 +125,32 @@ function Map (lat, lon) {
                     var marker = new google.maps.Marker ({
                         draggable: true,
                         animation: google.maps.Animation.DROP, /* マーカーのアニメーション */
-                        icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=輪|7FFF00|000000',
+                        // icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=輪|7FFF00|000000',
+                        icon: 'images/parking.png',
                         position: latlng, /* マーカーを立てる場所の緯度・経度 */
                         map: map, /*マーカーを配置する地図オブジェクト */
                         title: title
                     });
+                    markerP.push(marker);
                     // rep = str.match(/正規表現/);
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                        for (var i = 0; i < infowindowP.length; i++) {
+                            infowindowP[i].close();
+                        }
+
+                        map.setZoom(16);
+                        map.setCenter(marker.getPosition());
+
+                        console.log(d3.selectAll('.description'));
+
+                        var infowindow = new google.maps.InfoWindow({
+                            content: "<section class='description'><h1><a href='" + d.url + "' target='_blank'>" + title + "</a></h1><p>" + description + "</p></section>"
+                        });
+                        infowindowP.push(infowindow);
+
+                        infowindow.open(map, marker);
+                    });
                 }
             });
 
