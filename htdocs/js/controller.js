@@ -28,21 +28,32 @@ d3.select('#search')
     			data.latitude = latlng[i].d;
     			data.longitude = latlng[i].e;
     			console.log(data);
-    			$.ajax({
-	    			type: 'GET',
-	    			url:'http://192.168.33.30/search.php',
-	    			async: true,
-	    			data: data,
-	    			success: function(result) {
-	    				// console.log('成功');
-						console.log(result);
-						main.mappingObject(result);
-					},
-					error: function() {
-						alert('失敗しました');
-					},
 
-    			});	
+                // // 仮でテスト
+                var url = 'http://localhost:8888/search.php?latitude=' + data.latitude + '&longitude=' + data.longitude;
+
+                console.log(url);
+                
+                d3.json(url, function(error, json) {
+                    console.log(json);
+                    main.mappingObject(json);
+                });
+
+    	// 		$.ajax({
+	    // 			type: 'GET',
+	    // 			url:'http://localhost:8888/search.php',
+	    // 			async: true,
+	    // 			data: data,
+	    // 			success: function(result) {
+	    // 				// console.log('成功');
+					// 	console.log(result);
+					// 	main.mappingObject(result);
+					// },
+					// error: function() {
+					// 	alert('失敗しました');
+					// },
+
+    	// 		});	
     		}
         })        
 
