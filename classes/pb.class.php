@@ -38,7 +38,7 @@ class Pb extends Api implements api_interface {
 		if (isset($option['transportation']) !== true) {
 			$transportation = 'cycle';
 		}
-
+		$transportation = 'cycle';
 		if ($transportation === 'car') {
 			$ugx_targetTransportation = 'ugx_Car';
 		} else if ($transportation === 'cycle') {

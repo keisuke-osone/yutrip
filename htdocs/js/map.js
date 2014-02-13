@@ -1,8 +1,8 @@
 //マップに関する疑似クラス
 function Map (lat, lon) {
     //Mapの中央 //初期値は京都駅
-    // var center = {lat: 34.985458 , lon: 135.757755};
-    var center = {lat: 35.021365 , lon: 135.755481};
+     var center = {lat: 34.985458 , lon: 135.757755};
+    //var center = {lat: 35.021365 , lon: 135.755481};
     var mapOptions = {
             center: new google.maps.LatLng(center.lat , center.lon),
             zoom: 14,
@@ -11,6 +11,7 @@ function Map (lat, lon) {
             streetViewControl: false
         };
     var map;
+    var markerArray = new Array();
 
     //初期位置を中心にMapを表示
     this.initialize = function () {
@@ -65,6 +66,15 @@ function Map (lat, lon) {
                     for (var i = 0; i < infowindowG.length; i++) {
                         infowindowG[i].close();
                     }
+                        //距離計算でToになるマーカーを配列にいれる
+                        markerArray[1] = marker;
+                        //距離の計算
+                        if(markerArray.length >= 2) {
+                            var distance = google.maps.geometry.spherical.computeDistanceBetween(markerArray[0].getPosition(), markerArray[1].getPosition());
+                            console.log("距離は、"+ distance);
+                        }
+
+                    
 
                     map.setZoom(16);
                     map.setCenter(marker.getPosition());
@@ -72,7 +82,7 @@ function Map (lat, lon) {
                     console.log(d3.selectAll('.description'));
 
                     var infowindow = new google.maps.InfoWindow({
-                        content: "<section class='description'><h1><a href='" + d.url + "' target='_blank'>" + d.name + "</a></h1><p>" + d.category + "</p></section>"
+                        content: "<section class='description'><h1><a href='" + d.url + "' target='_blank'>" + d.name + "</a></h1><p>" + d.category + "(" + distance.toFixed(1) + "m)</p></section>"
                     });
                     infowindowG.push(infowindow);
 
@@ -134,9 +144,19 @@ function Map (lat, lon) {
                     markerP.push(marker);
                     // rep = str.match(/正規表現/);
 
+
+
                     google.maps.event.addListener(marker, 'click', function() {
                         for (var i = 0; i < infowindowP.length; i++) {
                             infowindowP[i].close();
+                        }
+
+                        //距離計算でToになるマーカーを配列にいれる
+                        markerArray[1] = marker;
+                        //距離の計算
+                        if(markerArray.length >= 2) {
+                            var distance = google.maps.geometry.spherical.computeDistanceBetween(markerArray[0].getPosition(), markerArray[1].getPosition());
+                            console.log("距離は、"+ distance);
                         }
 
                         map.setZoom(16);
@@ -145,7 +165,7 @@ function Map (lat, lon) {
                         console.log(d3.selectAll('.description'));
 
                         var infowindow = new google.maps.InfoWindow({
-                            content: "<section class='description'><h1><a href='" + d.url + "' target='_blank'>" + title + "</a></h1><p>" + description + "</p></section>"
+                            content: "<section class='description'><h1><a href='" + d.url + "' target='_blank'>" + title + "</a></h1><p>" + description + "(" + distance.toFixed(1) +  "m</p></section>"
                         });
                         infowindowP.push(infowindow);
 
@@ -162,6 +182,10 @@ function Map (lat, lon) {
                 map: map, /*マーカーを配置する地図オブジェクト */
                 title: '京都駅'
             });
+
+            //距離計算の時にFromとなるマーカーを配列に入れる
+            markerArray[0] = marker;
+
   //      });
     }
 }
