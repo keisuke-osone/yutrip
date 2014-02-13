@@ -7,7 +7,7 @@ class Config {
 		if ($name === 'gnavi') {
 			return array(
 						'ACCESS_KEY' => '15a94eb4a45b862a4dcff62a5972bc0f',
-						'ENDPOINT' => 'http://api.gnavi.co.jp/ver1/RestSearchAPI/?',
+						'ENDPOINT' => 'http://api.gnavi.co.jp/ver1/RestSearchAPI/?pref=PREF26&',
 						'RANGE_DEFAULT_VALUE' => 2
 					);
 		} else if ($name === 'pb') {
