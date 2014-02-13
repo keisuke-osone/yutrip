@@ -18,6 +18,7 @@ function Map (lat, lon) {
         map = new google.maps.Map(document.getElementById("map_canvas"),
               mapOptions);
 
+
         // google.maps.event.addListener(map, "click", function() {
         //     var chicago = new google.maps.LatLng(this.lat , this.lon);
         //     var numTiles = 1 << map.getZoom();
