@@ -23,7 +23,7 @@ $api = \Classes\Api::getInstance('pb');
 $option['transportation'] = 'cycle';
 $api->setRange($_REQUEST['pb_range']);
 $api->setLimit($_REQUEST['pb_linmit']);
-$api->setLimit($_REQUEST['pb_offset']);
+$api->setOffset($_REQUEST['pb_offset']);
 $result['p'] = $api->call($geo, $option);
 
 header('content-type: application/json; charset=utf-8');
