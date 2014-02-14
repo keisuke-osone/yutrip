@@ -8,10 +8,10 @@ $geo = array(
 	'longitude' => round($_REQUEST['longitude'], 7)
 );
 
-$geo = array(
-	'latitude' => '35.0116391',
-	'longitude' => '135.7680321'
-);
+// $geo = array(
+// 	'latitude' => '35.0116391',
+// 	'longitude' => '135.7680321'
+// );
 
 $api = \Classes\Api::getInstance('gnavi');
 $api->setRange($_REQUEST['g_range']);

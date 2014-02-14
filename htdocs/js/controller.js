@@ -24,13 +24,14 @@ d3.select('#search')
     			// latlng[0].e = 135.72843090000003;
     			console.log(latlng[i].d);
     			console.log(latlng[i].e);
+                Map(latlng[i].d, latlng[i].e);
     			var data = new Array();
     			data.latitude = latlng[i].d;
     			data.longitude = latlng[i].e;
     			console.log(data);
 
                 // // 仮でテスト
-                var url = 'http://localhost:8888/search.php?latitude=' + data.latitude + '&longitude=' + data.longitude;
+                var url = 'http://localhost/yutrip/htdocs/search.php?latitude=' + data.latitude + '&longitude=' + data.longitude;
 
                 console.log(url);
                 
@@ -61,5 +62,5 @@ d3.select('#search')
         // 
     });
 
-// main.mappingObject();
+ main.mappingObject();
 

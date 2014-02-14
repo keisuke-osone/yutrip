@@ -14,7 +14,7 @@ class Config {
 			return array(
 						'USER_ID' => 'takashi.honda',
 						'PASSWORD' => '=l2jrDE6i',
-						'ENDPOINT' => 'https://kyoto.smartercity.jp/api/v1/places?rdf_type=ugx_Parking',
+						'ENDPOINT' => 'http://kyoto.smartercity.jp/api/v1/places?rdf_type=ugx_Parking',
 						'RANGE_DEFAULT_VALUE' => 500
 					);
 		}

@@ -8,10 +8,10 @@ $geo = array(
 	'longitude' => $_REQUEST['longitude']
 );
 
-$geo = array(
-	'latitude' => '35.0116391',
-	'longitude' => '135.7680321'
-);
+// $geo = array(
+// 	'latitude' => '35.0116391',
+// 	'longitude' => '135.7680321'
+// );
 
 $api = \Classes\Api::getInstance('pb');
 $option['transportation'] = 'cycle';
