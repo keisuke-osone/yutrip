@@ -14,12 +14,16 @@ $geo = array(
 );
 
 $api = \Classes\Api::getInstance('gnavi');
-$api->setRange(500);
+$api->setRange($_REQUEST['g_range']);
+$api->setLimit($_REQUEST['g_linmit']);
+$api->setOffset($_REQUEST['g_offset']);
 $result['g'] = $api->call($geo);
 
 $api = \Classes\Api::getInstance('pb');
 $option['transportation'] = 'cycle';
-$api->setRange(500);
+$api->setRange($_REQUEST['pb_range']);
+$api->setLimit($_REQUEST['pb_linmit']);
+$api->setLimit($_REQUEST['pb_offset']);
 $result['p'] = $api->call($geo, $option);
 
 header('content-type: application/json; charset=utf-8');

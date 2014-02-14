@@ -13,4 +13,12 @@ class Util {
 		}
 		return true;
 	}
+
+	public static function getNumber($value) {
+		if (preg_match('/^[0-9]+$/', $value) !== 1) {
+			return 0;
+		}
+
+		return intval($value);
+	}
 }

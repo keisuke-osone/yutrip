@@ -6,11 +6,15 @@ class Gnavi extends Api implements api_interface {
 	private $area_code;
 	private $pref_code;
 	private $range;
+	private $limit;
+	private $offset;
 	// private $config;
 
 	public function __construct() {
 		$this->area_code 	= null;
 		$this->pref_code 	= null;
+		$this->limit		= 0;
+		$offset				= 0;
 		$this->range 		= parent::$conf['RANGE_DEFAULT_VALUE'];				//range default val
 	}
 
@@ -57,6 +61,7 @@ class Gnavi extends Api implements api_interface {
 	}
 
 	public function setRange($range=0) {
+		$range = \Lib\Util::getNumber($range);
 		if ($range <= 300) {
 			$this->range = 1;
 		} else if ($range <= 500) {
@@ -68,6 +73,14 @@ class Gnavi extends Api implements api_interface {
 		} else {
 			$this->range = 5;
 		}
+	}
+
+	public function setLimit($limit=0) {
+		$this->limit = \Lib\Util::getNumber($limit);
+	}
+
+	public function setOffset($offset=0) {
+		$this->offset = \Lib\Util::getNumber($offset);
 	}
 
 	public function call($geo=array(), $option=array()) {
@@ -82,6 +95,14 @@ class Gnavi extends Api implements api_interface {
 			. '&range=' . $this->range 
 			. '&latitude=' . $geo['latitude'] 
 			. '&longitude=' . $geo['longitude'];
+
+		if ($this->limit > 0) {
+			$url = $url . '&hit_per_page=' . $this->limit;
+		}
+
+		if ($this->offset > 0) {
+			$url = $url . '&offset=' . $this->offset;
+		}
 
 		$ret = array();
 		try {
@@ -101,6 +122,11 @@ class Gnavi extends Api implements api_interface {
 			}
 
 			$ret = simplexml_load_string($content);
+
+			//エラーコード
+			if (isset($ret->error) === true) {
+				$ret = array();
+			}
 		} catch (Exception $e) {
 			error_log($e->getMessage());
 		}

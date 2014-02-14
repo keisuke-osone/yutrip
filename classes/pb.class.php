@@ -14,16 +14,16 @@ class Pb extends Api implements api_interface {
 		$this->range  = parent::$conf['RANGE_DEFAULT_VALUE'];				//range default val
 	}
 
-	public function offset($offset_num) {
-		$this->offset = $offset_num;
+	public function setLimit($limit=0) {
+		$this->limit = \Lib\Util::getNumber($limit);
 	}
 
-	public function limit($limit_num) {
-		$this->limit = $limit_num;
+	public function setOffset($offset=0) {
+		$this->offset = \Lib\Util::getNumber($offset);
 	}
 
 	public function setRange($range=0) {
-		$this->range = $range;
+		$this->range = \Lib\Util::getNumber($range);;
 		if ($range <= 0) {
 			$this->range = parent::$conf['RANGE_DEFAULT_VALUE'];
 		}
@@ -55,6 +55,10 @@ class Pb extends Api implements api_interface {
 
 		if ($this->limit > 0) {
 			$url = $url . '&limit=' . $this->limit;
+		}
+
+		if ($this->offset > 0) {
+			$url = $url . '&offset=' . $this->offset;
 		}
 
 		$ret = array();

@@ -4,6 +4,8 @@ namespace Classes;
 
 interface api_interface{
 	public function setRange($param=0);
+	public function setLimit($limit=0);
+	public function setOffset($offset=0);
 	public function call($geo=array(), $option=array());
 }
 
@@ -27,6 +29,14 @@ class Api {
 //##########################################################
 
 	public function setRange($param=0) {
+
+	}
+
+	public function setLimit($limit=0) {
+
+	}
+
+	public function setOffset($offset=0) {
 
 	}
 
