@@ -7,7 +7,7 @@ body {
     /*height: 100%; */
     margin: 0 auto; 
     /*padding: 0; */
-    /*width: 100px;*/
+    width: 320px;
     text-align: center;
 }
 
@@ -40,19 +40,20 @@ section {
     border: solid 1px #bbb;
     box-shadow: 0px 0px 10px #555;
     /*padding: 10px;*/
-    width: 640px;
-    height: 1136px;
+    width: 320px;
+    height: 568px;
 }
 
 #map_canvas { 
     /*width: 50%;*/
-    width: 640px;
-    height: 1136px;
+    width: 320px;
+    height: 578px;
+    /*height: 1136px;*/
 }
 
 #search-form {
-    margin-left: 450px;
-    margin-top: -40px;
+    margin-left: 115px;
+    /*margin-top: -40px;*/
     position: absolute;
     text-align: left;
     width: 180px;
