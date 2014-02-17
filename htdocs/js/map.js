@@ -13,6 +13,8 @@ function Map (latitude, longitude) {
         };
     var map;
     var markerArray = new Array();
+    var markerG = new Array();
+    var markerP = new Array();  
 
     //初期位置を中心にMapを表示
     this.initialize = function () {
@@ -32,6 +34,18 @@ function Map (latitude, longitude) {
         // });
     }
 
+    this.eraseMarkers = function () {
+        for (var i = 0; i < markerG.length; i++) {
+            markerG[i].setMap(null);
+        }
+        for (var i = 0; i < markerP.length; i++) {
+            markerP[i].setMap(null);
+        }
+        for (var i = 0; i < markerArray.length; i++) {
+            markerArray[i].setMap(null);
+        }
+    }
+
     this.setCenter = function (latitude, longitude) {
         center = {lat: latitude , lon: longitude};
         // map.center = new google.maps.LatLng(center.lat , center.lon);
@@ -49,9 +63,7 @@ function Map (latitude, longitude) {
             // console.log(json.g.rest);
             // console.log(json.p);
             // console.log(center);
-            var markerG = new Array();
             var infowindowG = new Array();
-            var markerP = new Array();
             var infowindowP = new Array();
 
             json.g.rest.forEach(function(d) {
