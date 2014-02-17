@@ -29,9 +29,11 @@ d3.select('#search')
     			data.latitude = latlng[i].d;
     			data.longitude = latlng[i].e;
     			console.log(data);
+                main.setCenter(data.latitude, data.longitude);
 
                 // // 仮でテスト
-                var url = 'http://localhost/yutrip/htdocs/search.php?latitude=' + data.latitude + '&longitude=' + data.longitude;
+                // var url = 'http://localhost:8888/search.php?latitude=' + data.latitude + '&longitude=' + data.longitude +'&g_range=2000&pb_range=2000';
+                var url = 'http://yutrip.info/search.php?latitude=' + data.latitude + '&longitude=' + data.longitude +'&g_range=2000&pb_range=2000';
 
                 console.log(url);
                 

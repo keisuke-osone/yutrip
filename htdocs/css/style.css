@@ -52,10 +52,10 @@ section {
 }
 
 #search-form {
-    margin-left: 115px;
+    margin-left: 95px;
     /*margin-top: -40px;*/
     position: absolute;
     text-align: left;
-    width: 180px;
+    width: 200px;
     z-index: 1000;
 }

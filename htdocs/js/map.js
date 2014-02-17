@@ -1,7 +1,8 @@
 //マップに関する疑似クラス
-function Map (lat, lon) {
+function Map (latitude, longitude) {
     //Mapの中央 //初期値は京都駅
-     var center = {lat: 34.985458 , lon: 135.757755};
+    // var center = {lat: 34.985458 , lon: 135.757755};
+    var center = {lat: latitude , lon: longitude};
     //var center = {lat: 35.021365 , lon: 135.755481};
     var mapOptions = {
             center: new google.maps.LatLng(center.lat , center.lon),
@@ -31,8 +32,16 @@ function Map (lat, lon) {
         // });
     }
 
+    this.setCenter = function (latitude, longitude) {
+        center = {lat: latitude , lon: longitude};
+        // map.center = new google.maps.LatLng(center.lat , center.lon);
+        map.setCenter(new google.maps.LatLng(center.lat , center.lon));
+    }
+
     //APIからの結果を元にマーカーを作成
     this.mappingObject = function (json) {
+        console.log(map.center);
+
         //仮でテスト
         //var url = 'js/test.json';
 
